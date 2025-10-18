@@ -21,9 +21,9 @@ export default function loginPage() {
       <Pressable onPress={() => { router.replace("/(tabs)/"); }} style={styles.signInButton}>
         <Text style={styles.buttonText}>Sign in</Text>
       </Pressable>
-      <Link href="/register" style={styles.newAccountButton} replace>
+      <Pressable onPress={() => router.replace("/register")} style={styles.newAccountButton} replace>
         <Text style={styles.buttonText}>Create a new account</Text>
-      </Link>
+      </Pressable>
     </View>
   );
 }
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width: 400,
     height: 40,
     marginTop: 15,
-    borderColor: 'white',
+    borderColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -86,5 +86,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     textAlign: 'center',
+    justifyContent: 'center'
   }
 })
