@@ -11,7 +11,7 @@ import { FlashList } from '@shopify/flash-list';
 export default function HomeScreen() {
   return (
     <View>
-      <Image src={homeFeed[0].image}/>
+      <Image></Image>
     </View>
   )
 }
