@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Platform, View, Text } from "react-native";
+import { homeFeed } from '../../placeholder'
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -10,10 +11,11 @@ import { FlashList } from '@shopify/flash-list';
 export default function HomeScreen() {
   return (
     <View>
-      <Text>Test Text</Text>
+      <Image src={homeFeed[0].image}/>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+
 });
