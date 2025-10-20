@@ -33,6 +33,7 @@ export default function RootLayout() {
         <Stack.Screen name="login" options={{ headerShown: true }} />
         <Stack.Screen name="register" options={{ headerShown: true }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="editProfile" options={{ headerShown: true }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
