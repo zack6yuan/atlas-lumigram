@@ -1,6 +1,6 @@
 import { homeFeed } from "@/placeholder";
 import { FlashList } from "@shopify/flash-list";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 
 import {
   GestureHandlerRootView,
@@ -8,7 +8,7 @@ import {
   Gesture,
 } from "react-native-gesture-handler";
 
-import Animated, {
+import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
