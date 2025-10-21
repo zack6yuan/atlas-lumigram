@@ -1,6 +1,13 @@
+import { useImagePicker } from "@/hooks/useImagePicker";
+import { useState } from "react";
 import { View, Text, Button, StyleSheet, Image, TextInput, Pressable } from "react-native";
 const placeHolder = require('../../assets/images/placeholder.png')
+
 export default function addPost() {
+  const [caption, setCaption] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { image, openImagePicker, reset } = useImagePicker();
+
   return (
     <View style={styles.container}>
       <Image

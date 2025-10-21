@@ -12,6 +12,7 @@ import {
 } from "react-native-gesture-handler";
 
 import Animated, {
+  runOnJS,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
@@ -19,28 +20,26 @@ import Animated, {
 import { FlashList } from "@shopify/flash-list";
 
 export default function HomeScreen() {
-  const offset = useSharedValue({ x: 0, y: 0 });
-  const popupPosition = useSharedValue({ x: 0, y: 0 });
-  const popupAlpha = useSharedValue(0);
-
-  const longPressGesture = Gesture.LongPress().onStart((_event) => {
-    popupPosition.value = { x: offset.value.x, y: offset.value.y };
-    popupAlpha.value = withTiming(1);
+  const longPressGesture = Gesture.LongPress().onEnd((e, success) => {
+    if (success) {
+      runOnJS(() => {
+        console.log(`Long pressed for ${e.duration} ms!`);
+      })();
+    }
   });
 
   return (
-    <GestureHandlerRootView>
-      <GestureDetector gesture={longPressGesture}>
-        <FlashList
-          data={homeFeed}
-          renderItem={({ item }) => (
-            <View>
-              <Image source={{ uri: item.image }} style={styles.feedImage} />
-            </View>
-          )}
-        />
-      </GestureDetector>
-    </GestureHandlerRootView>
+    <FlashList
+      data={homeFeed}
+      renderItem={({ item }) => (
+        <GestureDetector gesture={longPressGesture}>
+          <View>
+            <Image source={{ uri: item.image }} style={styles.feedImage} />
+          </View>
+        </GestureDetector>
+      )}
+      estimatedItemSize={50}
+    />
   );
 }
 
