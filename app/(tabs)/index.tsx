@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, Text } from "react-native";
 import { homeFeed } from "../../placeholder";
 
 import {
@@ -13,13 +13,20 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { FlashList } from "@shopify/flash-list";
+import { scheduleOnRN } from "react-native-worklets";
 
 export default function HomeScreen() {
+  const pressDuration = (duration: number) => {
+    return (
+      <View>
+        <Text>Hello!</Text>
+      </View>
+    )
+  }
+
   const longPressGesture = Gesture.LongPress().onEnd((e, success) => {
     if (success) {
-      runOnJS(() => {
-        console.log(`Long pressed for ${e.duration} ms!`);
-      })();
+      runOnJS(pressDuration)(e.duration)
     }
   });
 
