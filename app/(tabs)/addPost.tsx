@@ -12,8 +12,8 @@ import {
 const placeHolder = require("../../assets/images/placeholder.png");
 
 export default function addPost() {
-  const [caption, setCaption] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [caption, setCaption] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const { image, openImagePicker, reset } = useImagePicker();
 
   // if no image is selected, show the placeholder

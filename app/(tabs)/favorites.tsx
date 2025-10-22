@@ -1,4 +1,5 @@
 import { homeFeed } from "@/placeholder";
+import { favoritesFeed } from "@/placeholder";
 import { FlashList } from "@shopify/flash-list";
 import { View, Image, StyleSheet } from "react-native";
 
@@ -28,7 +29,7 @@ export default function favoritesPage() {
     <GestureHandlerRootView>
       <GestureDetector gesture={longPressGesture}>
         <FlashList
-          data={homeFeed}
+          data={favoritesFeed}
           renderItem={({ item }) => (
             <View>
               <Image source={{ uri: item.image }} style={styles.feedImage} />

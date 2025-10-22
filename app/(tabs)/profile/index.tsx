@@ -1,12 +1,12 @@
 import { Text, View, Image, StyleSheet, Pressable } from "react-native";
 const profilePicture = require("../../../assets/images/profilePicture.png");
 import { FlashList } from '@shopify/flash-list';
-import { homeFeed } from "../../../placeholder";
+import { homeFeed, profileFeed } from "../../../placeholder";
 import { useRouter } from "expo-router";
 import { useState } from 'react';
 
 export default function Page() {
-  const [username, setUsername] = useState('Guest')
+  const [username, setUsername] = useState<string>('Guest')
   const router = useRouter();
 
   const handlePress = () => {
@@ -23,7 +23,7 @@ export default function Page() {
       </Pressable>
       <Text>@{username}</Text>
       <FlashList
-        data={homeFeed}
+        data={profileFeed}
         numColumns={3}
         renderItem={({ item }) => (
           <View>

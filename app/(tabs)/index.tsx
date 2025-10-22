@@ -40,7 +40,6 @@ export default function HomeScreen() {
           </View>
         </GestureDetector>
       )}
-      estimatedItemSize={50}
     />
   );
 }
