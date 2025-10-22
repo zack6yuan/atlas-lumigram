@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { usePermissions } from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
-import { ImageBase } from 'react-native';
 
 export function useImagePicker() {
   const [image, setImage] = useState<string | undefined>(undefined)
