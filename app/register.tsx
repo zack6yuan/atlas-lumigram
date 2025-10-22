@@ -17,6 +17,7 @@ export default function loginPage() {
         style={styles.inputField}
         placeholder="Password"
         placeholderTextColor="white"
+        secureTextEntry={true}
       />
       <Pressable onPress={() => { router.replace("/(tabs)/"); }} style={styles.signInButton}>
         <Text style={styles.buttonText}>Create account</Text>
