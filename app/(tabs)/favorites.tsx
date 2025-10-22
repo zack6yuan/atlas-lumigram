@@ -1,12 +1,11 @@
-import { homeFeed } from "@/placeholder";
 import { favoritesFeed } from "@/placeholder";
 import { FlashList } from "@shopify/flash-list";
-import { View, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 import {
-  GestureHandlerRootView,
-  GestureDetector,
   Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
 } from "react-native-gesture-handler";
 
 import {

@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { StyleSheet, View, Text, Pressable, Image, TextInput } from "react-native";
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function loginPage() {
   const router = useRouter();

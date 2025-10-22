@@ -1,19 +1,16 @@
-import { Image, StyleSheet, View, Text } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { homeFeed } from "../../placeholder";
 
 import {
-  GestureDetector,
   Gesture,
+  GestureDetector,
 } from "react-native-gesture-handler";
 
-import Animated, {
-  runOnJS,
-  useSharedValue,
-  withTiming,
+import {
+  runOnJS
 } from "react-native-reanimated";
 
 import { FlashList } from "@shopify/flash-list";
-import { scheduleOnRN } from "react-native-worklets";
 
 export default function HomeScreen() {
   const pressDuration = (duration: number) => {

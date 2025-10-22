@@ -1,13 +1,12 @@
 import { useImagePicker } from "@/hooks/useImagePicker";
 import { useState } from "react";
 import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
   Image,
-  TextInput,
   Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
 } from "react-native";
 const placeHolder = require("../../assets/images/placeholder.png");
 

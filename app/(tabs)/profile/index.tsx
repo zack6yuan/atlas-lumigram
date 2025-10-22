@@ -1,9 +1,9 @@
-import { Text, View, Image, StyleSheet, Pressable } from "react-native";
-const profilePicture = require("../../../assets/images/profilePicture.png");
 import { FlashList } from '@shopify/flash-list';
-import { homeFeed, profileFeed } from "../../../placeholder";
 import { useRouter } from "expo-router";
 import { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { profileFeed } from "../../../placeholder";
+const profilePicture = require("../../../assets/images/profilePicture.png");
 
 export default function Page() {
   const [username, setUsername] = useState<string>('Guest')

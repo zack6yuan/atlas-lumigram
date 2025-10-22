@@ -1,6 +1,6 @@
-import { View, TextInput, StyleSheet, Image, Text } from "react-native";
-import { userSearch, profileFeed } from "../../placeholder";
 import { FlashList } from "@shopify/flash-list";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import { userSearch } from "../../placeholder";
 const profilePicture = require("../../assets/images/profilePicture.png");
 
 export default function Search() {

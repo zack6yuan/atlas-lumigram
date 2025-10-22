@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { Text, View, StyleSheet, Image, TextInput, Pressable } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 const profilePicture = require("../assets/images/profilePicture.png");
 
 export default function editProfile() {
