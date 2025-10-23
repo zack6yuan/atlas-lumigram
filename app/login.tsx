@@ -1,8 +1,25 @@
+import { useAuth } from "@/components/AuthProvider";
 import { useRouter } from "expo-router";
+import { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function loginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const auth = useAuth();
+
+  // Needs fix: incorrect password is still allowing login
+  async function login() {
+    setLoading(true)
+    try {
+      await auth.login(email, password);
+      router.replace("/(tabs)")
+    } catch(err) {
+      alert(`Email or password id incorrect`);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -10,16 +27,21 @@ export default function loginPage() {
       <Text style={styles.loginText}>Login</Text>
       <TextInput
         style={styles.inputField}
+        onChangeText={setEmail}
         placeholder="Email"
         placeholderTextColor="white"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.inputField}
+        onChangeText={setPassword}
         placeholder="Password"
         placeholderTextColor="white"
         secureTextEntry={true}
+        autoCapitalize="none"
       />
-      <Pressable onPress={() => { router.replace("/(tabs)/"); }} style={styles.signInButton}>
+      <Pressable onPress={() => { router.replace("/(tabs)"); }} style={styles.signInButton}>
+      {/* <Pressable onPress={() => { router.replace("/(tabs)/"); }} style={styles.signInButton}> */}
         <Text style={styles.buttonText}>Sign in</Text>
       </Pressable>
       <Pressable onPress={() => router.replace("/register")} style={styles.newAccountButton} replace>

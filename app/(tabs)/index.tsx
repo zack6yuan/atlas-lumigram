@@ -8,8 +8,10 @@ import { runOnJS } from "react-native-reanimated";
 import { useState } from "react";
 
 import { FlashList } from "@shopify/flash-list";
+import { useAuth } from "@/components/AuthProvider";
 
 export default function HomeScreen() {
+  const auth = useAuth();
   const [pressed, setPressed] = useState<boolean>(false);
 
   const longPress = Gesture.LongPress()
@@ -41,6 +43,11 @@ export default function HomeScreen() {
       renderItem={({ item }) => (
         <GestureDetector gesture={bothGestures}>
           <View>
+            {/*
+              Welcome message is working on
+              register and not after login
+            */}
+            <Text>Welcome {auth.user?.email}!</Text>
             <Image source={{ uri: item.image }} style={styles.feedImage} />
             {pressed && (
               <View style={styles.overlayContainer}>

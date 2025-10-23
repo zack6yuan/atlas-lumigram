@@ -1,8 +1,25 @@
+import { useAuth } from "@/components/AuthProvider";
 import { useRouter } from "expo-router";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { useState } from "react";
+import { Image, Pressable, StyleSheet, Text, TextInput, TextInputChangeEvent, View } from "react-native";
 
 export default function loginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const auth = useAuth();
+
+  async function register() {
+    // alert(`Creating account with ${email} and ${password}`);
+    setLoading(true)
+    try {
+      await auth.register(email, password);
+      router.replace("/(tabs)")
+    } catch (err) {
+      alert(`Unable to create account...${err}`)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -12,14 +29,18 @@ export default function loginPage() {
         style={styles.inputField}
         placeholder="Email"
         placeholderTextColor="white"
+        autoCapitalize="none"
+        onChangeText={setEmail}
       />
       <TextInput
         style={styles.inputField}
         placeholder="Password"
         placeholderTextColor="white"
         secureTextEntry={true}
+        autoCapitalize="none"
+        onChangeText={setPassword}
       />
-      <Pressable onPress={() => { router.replace("/(tabs)/"); }} style={styles.signInButton}>
+      <Pressable onPress={() => { register() }} style={styles.signInButton}>
         <Text style={styles.buttonText}>Create account</Text>
       </Pressable>
       <Pressable onPress={() => { router.replace("/login") }} style={styles.newAccountButton} replace>

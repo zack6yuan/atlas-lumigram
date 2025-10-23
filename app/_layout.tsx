@@ -13,6 +13,7 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { AuthProvider } from "@/components/AuthProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,31 +35,43 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={styles.gestureStyles}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="login" options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen name="register" options={{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen name="(tabs)" options={{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen name="editProfile" options={{
-            headerShown: false,
-            headerTitleAlign: 'left',
-          }}
-          />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </GestureHandlerRootView>
+    <AuthProvider>
+      <GestureHandlerRootView style={styles.gestureStyles}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen
+              name="login"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="register"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="editProfile"
+              options={{
+                headerShown: false,
+                headerTitleAlign: "left",
+              }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </GestureHandlerRootView>
+    </AuthProvider>
   );
 }
 
@@ -66,4 +79,4 @@ const styles = StyleSheet.create({
   gestureStyles: {
     flex: 1,
   },
-})
+});
