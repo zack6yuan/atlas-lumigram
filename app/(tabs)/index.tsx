@@ -23,7 +23,7 @@ export default function HomeScreen() {
     });
 
   const displayAlert = () => {
-    alert('Liked! ❤️')
+    alert('Added to your liked album! 🩷')
   }
 
   const doubleTap = Gesture.Tap()

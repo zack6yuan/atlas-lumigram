@@ -24,7 +24,7 @@ export default function favoritesPage() {
     });
 
   const displayAlert = () => {
-    alert("Liked! ❤️");
+    alert("Added to your liked album!🩷");
   };
 
   const doubleTap = Gesture.Tap()
