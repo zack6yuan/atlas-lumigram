@@ -24,7 +24,7 @@ export function useImagePicker() {
   }
 
   function reset() {
-    alert("Reset Clicked")
+    alert("Successfully reset! 🔄")
   }
 
   return {image, openImagePicker, reset}
