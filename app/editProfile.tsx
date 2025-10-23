@@ -1,14 +1,18 @@
 import { useRouter } from 'expo-router';
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useState } from 'react';
 const profilePicture = require("../assets/images/profilePicture.png");
 
 export default function editProfile() {
+
+  const [username, setUsername] = useState("Guest")
 
   const router = useRouter();
 
   const reRoute = () => {
     router.push('/(tabs)/profile');
   }
+
 
   return (
     <View style={styles.container}>
