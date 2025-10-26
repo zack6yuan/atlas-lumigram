@@ -22,7 +22,7 @@ function logout() {
 }
 
 function login(email: string, password: string) {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
 }
 
 export function AuthProvider({children}: {children: ReactNode}) {

@@ -17,7 +17,7 @@ export default function loginPage() {
       await auth.login(email, password);
       router.replace("/(tabs)")
     } catch(err) {
-      alert(`Email or password id incorrect`);
+      alert(`Email or password is incorrect`);
     }
   }
 
@@ -40,7 +40,7 @@ export default function loginPage() {
         secureTextEntry={true}
         autoCapitalize="none"
       />
-      <Pressable onPress={() => { router.replace("/(tabs)"); }} style={styles.signInButton}>
+      <Pressable onPress={login} style={styles.signInButton}>
       {/* <Pressable onPress={() => { router.replace("/(tabs)/"); }} style={styles.signInButton}> */}
         <Text style={styles.buttonText}>Sign in</Text>
       </Pressable>
