@@ -1,4 +1,7 @@
+import { useAuth } from "@/components/AuthProvider";
 import { useImagePicker } from "@/hooks/useImagePicker";
+import firestore from "@/lib/firestore";
+import storage from "@/lib/storage";
 import { useState } from "react";
 import {
   Image,
@@ -11,12 +14,32 @@ import {
 const placeHolder = require("../../assets/images/placeholder.png");
 
 export default function addPost() {
+  const auth = useAuth();
   const [caption, setCaption] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { image, openImagePicker, reset } = useImagePicker();
 
   // if no image is selected, show the placeholder
   const newSource = image ? { uri: image } : placeHolder;
+
+  async function save(){
+    if (!image) return;
+    setLoading(true);
+    const name = image?.split("/").pop() as string;
+    const {downloadURL, metadata} = await storage.upload(image, name);
+    console.log(downloadURL);
+
+    // caption is not being added to the firestore database
+    firestore.addPost({
+      caption,
+      image: downloadURL,
+      createdAt: new Date(),
+      createdBy: auth.user?.uid!!,
+    })
+
+    setLoading(false);
+    alert("Post added!")
+  }
 
   return (
     <View style={styles.container}>
@@ -35,7 +58,10 @@ export default function addPost() {
             placeholderTextColor={"#666666"}
             style={styles.imageCaption}
           />
-          <Pressable style={styles.saveImageButton}>
+          <Pressable
+            style={styles.saveImageButton}
+            onPress={save}
+          >
             <Text style={styles.saveText}>Save</Text>
           </Pressable>
           <Pressable style={styles.reset} onPress={reset}>

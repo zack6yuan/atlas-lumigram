@@ -1,7 +1,7 @@
 import { useAuth } from "@/components/AuthProvider";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function loginPage() {
   const router = useRouter();
@@ -17,7 +17,10 @@ export default function loginPage() {
       await auth.login(email, password);
       router.replace("/(tabs)")
     } catch(err) {
-      alert(`Email or password is incorrect`);
+      Alert.alert(
+        `Authentication Failed`,
+        `Please check your email and password and try again.`
+      );
     }
   }
 

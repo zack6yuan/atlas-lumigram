@@ -43,10 +43,6 @@ export default function HomeScreen() {
       renderItem={({ item }) => (
         <GestureDetector gesture={bothGestures}>
           <View>
-            {/*
-              Welcome message is working on
-              register and not after login
-            */}
             <Text>Welcome {auth.user?.email}!</Text>
             <Image source={{ uri: item.image }} style={styles.feedImage} />
             {pressed && (
