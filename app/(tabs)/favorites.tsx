@@ -1,12 +1,9 @@
 import { favoritesFeed } from "@/placeholder";
 import { FlashList } from "@shopify/flash-list";
 import { useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Alert, Image, StyleSheet, View } from "react-native";
 
-import {
-  Gesture,
-  GestureDetector,
-} from "react-native-gesture-handler";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 import { runOnJS } from "react-native-reanimated";
 
@@ -24,7 +21,7 @@ export default function favoritesPage() {
     });
 
   const displayAlert = () => {
-    alert("Added to your liked album!🩷");
+    Alert.alert(`Liked`, `Added to your liked album!🩷`);
   };
 
   const doubleTap = Gesture.Tap()
@@ -46,7 +43,9 @@ export default function favoritesPage() {
             {pressed && (
               <View style={styles.overlayContainer}>
                 <Text style={styles.overlayText}>
-                  Pariatur officia ut dolor commodo. Adipisicing reprehenderit magna dolor non fugiat ea fugiat ea sunt duis nostrud reprehenderit cupidatat magna.
+                  Pariatur officia ut dolor commodo. Adipisicing reprehenderit
+                  magna dolor non fugiat ea fugiat ea sunt duis nostrud
+                  reprehenderit cupidatat magna.
                 </Text>
               </View>
             )}
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
   },
   overlayText: {
     textAlign: "center",
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
 });
