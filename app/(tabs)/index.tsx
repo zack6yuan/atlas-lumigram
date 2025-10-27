@@ -19,10 +19,7 @@ import { getAdditionalUserInfo } from "firebase/auth";
 export default function HomeScreen() {
   const auth = useAuth();
   const [pressed, setPressed] = useState<boolean>(false);
-  const [url, setUrl] = useState("");
-
-  // Get the images from FireStore
-
+  const [url, setUrl] = useState([]);
 
   const longPress = Gesture.LongPress()
     // Beginning of the gesture
@@ -49,7 +46,7 @@ export default function HomeScreen() {
 
   return (
     <FlashList
-      data={homeFeed}
+      data={ homeFeed }
       renderItem={({ item }) => (
         <GestureDetector gesture={gestureRace}>
           <View>
