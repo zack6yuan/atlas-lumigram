@@ -31,4 +31,5 @@ export const auth = initializeAuth(app, {
 
 export const storage = getStorage(app);
 
+// Allow usage of Firestore
 export const db = getFirestore(app);
