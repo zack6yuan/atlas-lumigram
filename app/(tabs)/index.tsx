@@ -18,6 +18,7 @@ import {
   where,
   getDocs,
   snapshotEqual,
+  orderBy,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 import { getAdditionalUserInfo } from "firebase/auth";
@@ -36,8 +37,16 @@ export default function HomeScreen() {
 
   // State variable for image URL's from Firestore database
   const [firestoreImage, getFirestoreImage] = useState([]);
+  
   // Define the collection that the data will be accessed from
-  const imagesCollectionRef = collection(db, "posts");
+  const getPosts = collection(db, "posts");
+
+  // Sort the images with the newest added at the top
+  const imagesCollectionRef = query(
+    getPosts,
+    where("image", "!=", null),
+    orderBy("createdAt")
+);
 
   useEffect(() => {
     const fetchImage = async () => {
