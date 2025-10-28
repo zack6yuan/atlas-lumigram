@@ -58,9 +58,9 @@ export default function favoritesPage() {
 
 const styles = StyleSheet.create({
   feedImage: {
-    width: 435,
-    height: 435,
-    marginLeft: 2.5,
+    width: 430,
+    height: 430,
+    marginLeft: 4,
     marginBottom: 10,
     borderRadius: 20,
   },
