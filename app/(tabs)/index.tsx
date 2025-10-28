@@ -37,7 +37,7 @@ export default function HomeScreen() {
 
   // State variable for image URL's from Firestore database
   const [firestoreImage, getFirestoreImage] = useState([]);
-  
+
   // Define the collection that the data will be accessed from
   const getPosts = collection(db, "posts");
 
@@ -45,7 +45,7 @@ export default function HomeScreen() {
   const imagesCollectionRef = query(
     getPosts,
     where("image", "!=", null),
-    orderBy("createdAt")
+    orderBy("createdAt", "desc")
 );
 
   useEffect(() => {
