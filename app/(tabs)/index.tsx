@@ -45,7 +45,6 @@ export default function HomeScreen() {
   const imagesCollectionRef = query(
     getPosts,
     where("image", "!=", null),
-    orderBy("createdAt", "desc")
 );
 
   useEffect(() => {
