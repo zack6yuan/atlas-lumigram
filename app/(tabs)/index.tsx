@@ -1,6 +1,5 @@
 // Home page with home photo feed
-import { Image, StyleSheet, Text, View } from "react-native";
-import { homeFeed } from "../../placeholder";
+import { Image, RefreshControl, StyleSheet, Text, View } from "react-native";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
@@ -11,29 +10,22 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { FlashList } from "@shopify/flash-list";
 
-import { db, storage } from "@/firebaseConfig";
+import { db } from "@/firebaseConfig";
 import {
-  collection,
-  query,
-  where,
-  getDocs,
-  snapshotEqual,
-  orderBy,
+    collection,
+    getDocs,
+    query,
+    where
 } from "firebase/firestore";
-import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
-import { getAdditionalUserInfo } from "firebase/auth";
 
-type Image = {
-  id: string;
-  image: string;
-  caption: string;
-  createdAt: Date;
-  createdBy: string;
-};
+import React from "react";
 
 export default function HomeScreen() {
   const auth = useAuth();
   const [pressed, setPressed] = useState<boolean>(false);
+
+  // Refresh control
+  const [refreshing, setRefreshing] = useState(false);
 
   // State variable for image URL's from Firestore database
   const [firestoreImage, getFirestoreImage] = useState([]);
@@ -46,6 +38,13 @@ export default function HomeScreen() {
     getPosts,
     where("image", "!=", null),
 );
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -107,6 +106,9 @@ export default function HomeScreen() {
           </View>
         </GestureDetector>
       )}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     />
   );
 }
