@@ -12,14 +12,50 @@ import { useAuth } from "@/components/AuthProvider";
 import { FlashList } from "@shopify/flash-list";
 
 import { db, storage } from "@/firebaseConfig";
-import { collection, query, where, getDocs, snapshotEqual } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  snapshotEqual,
+} from "firebase/firestore";
 import { getDownloadURL, getStorage, listAll, ref } from "firebase/storage";
 import { getAdditionalUserInfo } from "firebase/auth";
+
+type Image = {
+  id: string;
+  image: string;
+  caption: string;
+  createdAt: Date;
+  createdBy: string;
+};
 
 export default function HomeScreen() {
   const auth = useAuth();
   const [pressed, setPressed] = useState<boolean>(false);
-  const [url, setUrl] = useState([]);
+
+  // State variable for image URL's from Firestore database
+  const [firestoreImage, getFirestoreImage] = useState([]);
+  // Define the collection that the data will be accessed from
+  const imagesCollectionRef = collection(db, "posts");
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      //  Read the data
+      try {
+        const data = await getDocs(imagesCollectionRef);
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        console.log(filteredData);
+        getFirestoreImage(filteredData);
+      } catch (err) {
+        console.error(`Error fetching images --> ${err}`);
+      }
+    };
+    fetchImage();
+  }, []);
 
   const longPress = Gesture.LongPress()
     // Beginning of the gesture
@@ -32,30 +68,31 @@ export default function HomeScreen() {
     });
 
   const displayAlert = () => {
-    alert('Added to your liked album! 🩷')
-  }
+    alert("Added to your liked album! 🩷");
+  };
 
   const doubleTap = Gesture.Tap()
     .maxDuration(250)
     .numberOfTaps(2)
     .onStart(() => {
       runOnJS(displayAlert)();
-  })
+    });
 
-  const gestureRace = Gesture.Race(doubleTap, longPress)
+  const gestureRace = Gesture.Race(doubleTap, longPress);
 
   return (
     <FlashList
-      data={ homeFeed }
+      data={firestoreImage}
       renderItem={({ item }) => (
         <GestureDetector gesture={gestureRace}>
           <View>
-            <Text>Welcome {auth.user?.email}!</Text>
             <Image source={{ uri: item.image }} style={styles.feedImage} />
             {pressed && (
               <View style={styles.overlayContainer}>
                 <Text style={styles.overlayText}>
-                  Pariatur officia ut dolor commodo. Adipisicing reprehenderit magna dolor non fugiat ea fugiat ea sunt duis nostrud reprehenderit cupidatat magna.
+                  Pariatur officia ut dolor commodo. Adipisicing reprehenderit
+                  magna dolor non fugiat ea fugiat ea sunt duis nostrud
+                  reprehenderit cupidatat magna.
                 </Text>
               </View>
             )}
@@ -87,8 +124,7 @@ const styles = StyleSheet.create({
   },
   overlayText: {
     textAlign: "center",
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
 });
-
