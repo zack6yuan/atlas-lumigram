@@ -1,5 +1,5 @@
 import { db } from "@/firebaseConfig";
-import { favoritesFeed } from "@/placeholder";
+import { favoritesFeed, homeFeed } from "@/placeholder";
 import { FlashList } from "@shopify/flash-list";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect } from "react";
@@ -77,7 +77,7 @@ export default function favoritesPage() {
 
   return (
     <FlashList
-      data={favoriteImages}
+      data={homeFeed}
       renderItem={({ item }) => (
         <GestureDetector gesture={bothGestures}>
           <View>

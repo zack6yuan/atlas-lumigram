@@ -31,7 +31,7 @@ export default function addPost() {
 
     // caption is not being added to the firestore database
     firestore.addPost({
-      caption,
+      caption: caption,
       image: downloadURL,
       createdAt: new Date(),
       createdBy: auth.user?.uid!!,
