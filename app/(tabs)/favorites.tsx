@@ -1,7 +1,8 @@
 import { favoritesFeed } from "@/placeholder";
 import { FlashList } from "@shopify/flash-list";
+import React from "react";
 import { useState } from "react";
-import { Alert, Image, StyleSheet, View } from "react-native";
+import { Alert, Image, StyleSheet, View, RefreshControl } from "react-native";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
@@ -9,6 +10,15 @@ import { runOnJS } from "react-native-reanimated";
 
 export default function favoritesPage() {
   const [pressed, setPressed] = useState(false);
+  // Refresh control
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+        setRefreshing(false);
+    }, 2000);
+}, []);
 
   const longPress = Gesture.LongPress()
     // Beginning of the gesture
@@ -52,6 +62,9 @@ export default function favoritesPage() {
           </View>
         </GestureDetector>
       )}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     />
   );
 }
