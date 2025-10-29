@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { usePermissions } from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
+import { router } from 'expo-router';
 
 export function useImagePicker() {
   const [image, setImage] = useState<string | undefined>(undefined)
@@ -24,7 +25,7 @@ export function useImagePicker() {
   }
 
   function reset() {
-    alert("Successfully reset! 🔄")
+    router.replace("/(tabs)/addPost");
   }
 
   return {image, openImagePicker, reset}

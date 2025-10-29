@@ -3,6 +3,7 @@ import { useImagePicker } from "@/hooks/useImagePicker";
 import firestore from "@/lib/firestore";
 import storage from "@/lib/storage";
 import { router } from "expo-router";
+import React from "react";
 import { useState } from "react";
 import {
   Image,
@@ -23,10 +24,9 @@ export default function addPost() {
   // if no image is selected, show the placeholder
   const newSource = image ? { uri: image } : placeHolder;
 
-  const handleReset = () => {
-    reset();
-    router.push('/(tabs)/addPost');
-  };
+    const reRoute = () => {
+        router.push('/(tabs)/addPost')
+    }
 
   async function save(){
     if (!image) return;
@@ -74,7 +74,7 @@ export default function addPost() {
           >
             <Text style={styles.saveText}>Save</Text>
           </Pressable>
-          <Pressable style={styles.reset} onPress={handleReset}>
+          <Pressable style={styles.reset} onPress={reRoute}>
             <Text>Reset</Text>
           </Pressable>
         </View>
