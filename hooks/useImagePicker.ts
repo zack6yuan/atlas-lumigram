@@ -25,6 +25,7 @@ export function useImagePicker() {
   }
 
   function reset() {
+    setImage(undefined)
     router.replace("/(tabs)/addPost");
   }
 

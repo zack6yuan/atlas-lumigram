@@ -24,10 +24,6 @@ export default function addPost() {
   // if no image is selected, show the placeholder
   const newSource = image ? { uri: image } : placeHolder;
 
-    const reRoute = () => {
-        router.push('/(tabs)/addPost')
-    }
-
   async function save(){
     if (!image) return;
     setLoading(true);
@@ -74,7 +70,7 @@ export default function addPost() {
           >
             <Text style={styles.saveText}>Save</Text>
           </Pressable>
-          <Pressable style={styles.reset} onPress={reRoute}>
+          <Pressable style={styles.reset} onPress={reset}>
             <Text>Reset</Text>
           </Pressable>
         </View>
