@@ -1,5 +1,5 @@
 // Home page with home photo feed
-import { Image, RefreshControl, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, RefreshControl, StyleSheet, Text, View } from "react-native";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
@@ -11,12 +11,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { FlashList } from "@shopify/flash-list";
 
 import { db } from "@/firebaseConfig";
-import {
-    collection,
-    getDocs,
-    query,
-    where
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 import React from "react";
 
@@ -34,35 +29,32 @@ export default function HomeScreen() {
   const getPosts = collection(db, "posts");
 
   // Sort the images with the newest added at the top
-  const imagesCollectionRef = query(
-    getPosts,
-    where("image", "!=", null),
-);
+  const imagesCollectionRef = query(getPosts, where("image", "!=", null));
 
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 2000);
-    }, []);
+  async function fetchImage() {
+    try {
+      const data = await getDocs(imagesCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      getFirestoreImage(filteredData);
+    } catch (error) {
+      console.error(`Error fetching images: ${error}`);
+    }
+  }
 
   useEffect(() => {
-    const fetchImage = async () => {
-      //  Read the data
-      try {
-        const data = await getDocs(imagesCollectionRef);
-        const filteredData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        console.log(filteredData);
-        getFirestoreImage(filteredData);
-      } catch (err) {
-        console.error(`Error fetching images --> ${err}`);
-      }
-    };
     fetchImage();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchImage();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
 
   const longPress = Gesture.LongPress()
     // Beginning of the gesture
@@ -75,7 +67,10 @@ export default function HomeScreen() {
     });
 
   const displayAlert = () => {
-    alert("Added to your liked album! 🩷");
+    Alert.alert(
+        "Liked!",
+        "Added to your liked album! 🩷"
+    )
   };
 
   const doubleTap = Gesture.Tap()
@@ -93,7 +88,11 @@ export default function HomeScreen() {
       renderItem={({ item }) => (
         <GestureDetector gesture={gestureRace}>
           <View>
-            <Image source={{ uri: item.image }} style={styles.feedImage} />
+            <Image
+              source={{ uri: item.image }}
+              key={item.id}
+              style={styles.feedImage}
+            />
             {pressed && (
               <View style={styles.overlayContainer}>
                 <Text style={styles.overlayText}>
@@ -109,6 +108,10 @@ export default function HomeScreen() {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
+      // Set the key for the FlashList, images stay in correct order.
+      keyExtractor={(item) => {
+        return item.id;
+      }}
     />
   );
 }
