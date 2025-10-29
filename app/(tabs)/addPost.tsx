@@ -2,6 +2,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { useImagePicker } from "@/hooks/useImagePicker";
 import firestore from "@/lib/firestore";
 import storage from "@/lib/storage";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -22,12 +23,19 @@ export default function addPost() {
   // if no image is selected, show the placeholder
   const newSource = image ? { uri: image } : placeHolder;
 
+  const handleReset = () => {
+    reset();
+    router.push('/(tabs)/addPost');
+  };
+
   async function save(){
     if (!image) return;
     setLoading(true);
     const name = image?.split("/").pop() as string;
     const {downloadURL, metadata} = await storage.upload(image, name);
     console.log(downloadURL);
+
+    console.log('Caption is:', caption);
 
     // caption is not being added to the firestore database
     firestore.addPost({
@@ -57,6 +65,8 @@ export default function addPost() {
             placeholder="Add a caption"
             placeholderTextColor={"#666666"}
             style={styles.imageCaption}
+            value={caption}
+            onChangeText={setCaption}
           />
           <Pressable
             style={styles.saveImageButton}
@@ -64,7 +74,7 @@ export default function addPost() {
           >
             <Text style={styles.saveText}>Save</Text>
           </Pressable>
-          <Pressable style={styles.reset} onPress={reset}>
+          <Pressable style={styles.reset} onPress={handleReset}>
             <Text>Reset</Text>
           </Pressable>
         </View>
