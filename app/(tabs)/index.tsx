@@ -1,5 +1,12 @@
 // Home page with home photo feed
-import { Alert, Image, RefreshControl, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Image,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
@@ -11,7 +18,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { FlashList } from "@shopify/flash-list";
 
 import { db } from "@/firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
 import React from "react";
 
@@ -29,7 +36,11 @@ export default function HomeScreen() {
   const getPosts = collection(db, "posts");
 
   // Sort the images with the newest added at the top
-  const imagesCollectionRef = query(getPosts, where("image", "!=", null));
+  const imagesCollectionRef = query(
+    getPosts,
+    where("image", "!=", null),
+    orderBy("createdAt", "desc")
+  );
 
   async function fetchImage() {
     try {
@@ -67,10 +78,7 @@ export default function HomeScreen() {
     });
 
   const displayAlert = () => {
-    Alert.alert(
-        "Liked!",
-        "Added to your liked album! 🩷"
-    )
+    Alert.alert("Liked!", "Added to your liked album! 🩷");
   };
 
   const doubleTap = Gesture.Tap()
