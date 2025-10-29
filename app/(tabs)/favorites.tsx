@@ -1,6 +1,8 @@
+import { db } from "@/firebaseConfig";
 import { favoritesFeed } from "@/placeholder";
 import { FlashList } from "@shopify/flash-list";
-import React from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Alert, Image, StyleSheet, View, RefreshControl } from "react-native";
 
@@ -9,16 +11,46 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 
 export default function favoritesPage() {
+  // Pressed state for gestures
   const [pressed, setPressed] = useState(false);
+
   // Refresh control
   const [refreshing, setRefreshing] = useState(false);
+
+  // Favorite Images
+  const [favoriteImages, getFavoriteImages] = useState([]);
+
+  const getFavorites = collection(db, "favorites");
+
+  const favoritesCollectionRef = query(
+    getFavorites,
+    where("image", "!=", "null"),
+  );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-        setRefreshing(false);
+      setRefreshing(false);
     }, 2000);
-}, []);
+  }, []);
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+        // Read the data
+        try {
+            const data = await getDocs(favoritesCollectionRef);
+            const filteredData = data.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+            }));
+            console.log(filteredData);
+            getFavoriteImages(filteredData)
+        } catch(err) {
+            console.error(`Error fetching images --> ${err}`)
+        }
+    };
+    fetchFavorites();
+  }, [])
 
   const longPress = Gesture.LongPress()
     // Beginning of the gesture
@@ -45,7 +77,7 @@ export default function favoritesPage() {
 
   return (
     <FlashList
-      data={favoritesFeed}
+      data={favoriteImages}
       renderItem={({ item }) => (
         <GestureDetector gesture={bothGestures}>
           <View>

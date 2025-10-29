@@ -8,12 +8,18 @@ type Post = {
   createdBy: string;
 }
 
-const posts = collection(db, "posts")
+const posts = collection(db, "posts");
+const favorites = collection(db, 'favorites');
 
 async function addPost(post: Post){
   await addDoc(posts, post);
 }
 
+async function addFavorite(favorite: Post) {
+    await addDoc(favorites, favorite)
+}
+
 export default {
   addPost,
+  addFavorite,
 };
